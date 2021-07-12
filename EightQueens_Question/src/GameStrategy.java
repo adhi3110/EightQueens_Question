@@ -5,13 +5,13 @@ public class GameStrategy {
 	private int getColumn(int cellId) {
 		// WRITE YOUR LOGIC HERE...................................		
 
-		return 0;	// just for the heck of it
+		return cellId%8;	// just for the heck of it
 	}
 	
 	private int getRow(int cellId) {
 		// WRITE YOUR LOGIC HERE....................................
 		
-		return 0;	// just for the heck of it
+		return cellId/8;	// just for the heck of it
 	}
 
 	public boolean isValidPosition(int cellId) {
@@ -24,12 +24,42 @@ public class GameStrategy {
 		int col = getColumn(cellId);
 		
 		int row = getRow(cellId);
-		
+
+		if(placedQueens[row][col]) {
+			return false;
+		}
+		else {
+			placedQueens[row][col] = true;
+			for(int i= 0;i<8;i++) {
+				placedQueens[row][i] = placedQueens[i][col] = true;
+			}
+			int i = row, j = col;
+			while(i>=0 && j>=0)
+			{
+				placedQueens[i--][j--] = true;
+			}
+			i = row; j = col;
+			while(i<=7 && j<=7)
+			{
+				placedQueens[i++][j++] = true;
+			}
+			for(i=0;i<8;i++)
+				for(j=0;j<8;j++)
+				{
+					if(i+j == row+col)
+						placedQueens[i][j] = true;
+				}
+			for(i=0;i<=7;i++){
+				for(j=0;j<=7;j++)
+					System.out.print(placedQueens[i][j] + " ");
+				System.out.println();
+			}
+			return true;
+		}
 		/*
 			WRITE YOUR LOGIC HERE...............................
 
 		*/
-		return isValid;
 	}
 }
 
